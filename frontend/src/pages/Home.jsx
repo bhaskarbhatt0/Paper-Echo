@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { ratingFor } from "../utils/rating";
+import { API_URL } from "../config";
 
 const HERO_QUOTES = [
   "A room without books is like a body without a soul.",
@@ -87,7 +88,7 @@ function Home() {
   }, []);
 
   const fetchBooks = () => {
-    fetch("http://localhost:5000/api/books")
+    fetch(`${API_URL}/api/books`)
       .then((res) => res.json())
       .then((data) => {
         setBooks(data);
@@ -99,8 +100,8 @@ function Home() {
     e.preventDefault();
     setFormError("");
     const url = bookForm.id
-      ? `http://localhost:5000/api/books/${bookForm.id}`
-      : "http://localhost:5000/api/books";
+      ? `${API_URL}/api/books/${bookForm.id}`
+      : `${API_URL}/api/books`;
     const method = bookForm.id ? "PUT" : "POST";
 
     fetch(url, {

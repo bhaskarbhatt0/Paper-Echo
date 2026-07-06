@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 import { ratingFor } from "../utils/rating";
 import { parsePrice } from "../utils/price";
+import { API_URL } from "../config";
 
 const QUIZ_QUESTIONS = [
   {
@@ -57,7 +58,7 @@ function ChatBot() {
 
   useEffect(() => {
     if (open && books.length === 0) {
-      fetch("http://localhost:5000/api/books")
+      fetch(`${API_URL}/api/books`)
         .then((res) => res.json())
         .then(setBooks)
         .catch(() => setBooks([]));

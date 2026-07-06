@@ -6,7 +6,18 @@ import authRoutes from "./routes/auth.js";
 import { sendContactEmail } from "./mailer.js";
 
 const app = express();
-app.use(cors());
+
+const allowedOrigins = ["http://localhost:5173"];
+if (process.env.FRONTEND_URL) allowedOrigins.push(process.env.FRONTEND_URL);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) callback(null, true);
+      else callback(new Error("Not allowed by CORS"));
+    },
+  })
+);
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
